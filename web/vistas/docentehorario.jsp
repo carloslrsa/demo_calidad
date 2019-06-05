@@ -20,27 +20,27 @@
             <h2>Tipo Docente: T. <c:out value="${docente.categoria.tipo}"/></h2>
         </div>
         <form action="./seleccionarhorario" align="center" method="post">
-            <table>
+            <table id="interactable_table">
                 <thead>
                     <tr class="table100-head">
                         <th>HORAS</th>
                         <th class="column2">Lunes</th>
                         <th class="column2">Martes</th>
-                        <th class="column2">Miércoles</th>
+                        <th class="column2">MiÃ©rcoles</th>
                         <th class="column2">Jueves</th>
                         <th class="column2">Viernes</th>
-                        <th class="column2">Sábado</th>
+                        <th class="column2">SÃ¡bado</th>
                     </tr>
                 </thead>
                 <c:forEach var="r" items="${horario}">
                     <tr>
-                        <td><c:out value="${r.hora}"/></td>
-                        <td><input type="checkbox" class="check-box-hour" value="${r.hora}" name="lunes"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="martes"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="miercoles"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="jueves"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="viernes"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="sabado"/></td>
+                        <td id="hora"><label><c:out value="${r.hora}"/></label></td>
+                        <td><input type="checkbox" value="${r.hora}" name="lunes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        <td><input type="checkbox" value="${r.hora}" name="martes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        <td><input type="checkbox" value="${r.hora}" name="miercoles" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        <td><input type="checkbox" value="${r.hora}" name="jueves" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        <td><input type="checkbox" value="${r.hora}" name="viernes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        <td><input type="checkbox" value="${r.hora}" name="sabado" style="opacity:0; position:absolute; left:9999px;"/></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -51,6 +51,49 @@
                 <c:if test="${errorMessage != null}">
                     alert('${errorMessage}');
                 </c:if>
+            </script>
+            <script>
+            
+            $(function () {
+            var isMouseDown = false,
+                isHighlighted;
+            $("#interactable_table td")
+                .mousedown(function () {
+
+                var isHour = $(this).attr("id");
+                if(isHour != "hora"){
+                    isMouseDown = true;
+                    $(this).toggleClass("selected");
+                    isHighlighted = $(this).hasClass("selected");
+                    if(isHighlighted)
+                        ($(this).children()).attr("checked","checked");
+                    else
+                        ($(this).children()).removeAttr("checked");
+                }
+                
+                return false; // prevent text selection
+                })
+                .mouseover(function () {
+                if (isMouseDown) {
+                    var isHour = $(this).attr("id");
+                    if(isHour != "hora"){
+                        $(this).toggleClass("selected", isHighlighted);
+                        if(isHighlighted)
+                            ($(this).children()).attr("checked","checked");
+                        else
+                            ($(this).children()).removeAttr("checked");
+                    }
+                }
+                })
+                .bind("selectstart", function () {
+                return false;
+                })
+
+            $(document)
+                .mouseup(function () {
+                isMouseDown = false;
+                });
+            });
             </script>
         </form>
     </div>	
