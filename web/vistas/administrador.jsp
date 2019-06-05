@@ -7,31 +7,53 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Sistema Disponibilidad Docente</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/jquery-3.4.1.js"></script>
 </head>
 <body>
-    <div align="center">
-        <div>
-            <h2>Administrador: <c:out value="${administrador.nombres}"/> <c:out value="${administrador.apellidos}"/></h2>
+    <div>
+        <div align="center">
+            <div class="div-contenedor">
+                <label>ADMINISTRADOR: </label><input class="text-rounded" type="text" value="${administrador.nombres} ${administrador.apellidos}" disabled="true"/>
+            </div>
         </div>
         <hr>
-        <h2>SOLICITUDES DE REINGRESO</h2>
-        <form action="./administrador" align="center" method="post">
-            <table border="1px">
-            <c:forEach var="solicitud" items="${solicitudes}">
-                <tr>
-                    <td>${solicitud.docente.nombres}</td>
-                    <td>${solicitud.docente.apellidos}</td>
-                    <td>${solicitud.motivo}</td>
-                    <td>
-                        <input type="submit" name="atender" value="Atender">
-                        <input type="hidden" name="solicitudAtendida" value="${solicitud.idSolicitud}">
-                    </td>
-                </tr>
-            </c:forEach>
-            </table>
-        </form>
+        <div align="center">
+            <div class="div-contenedor" style="padding: 5px">
+                <h3>SOLICITUDES DE REINGRESO</h3>
+            </div>
+        </div>
+        <div align="center">
+            <form action="./administrador"method="post">
+                <table>
+                    <thead>
+                        <tr class="table100-head">
+                            <th>NOMBRES</th>
+                            <th>APELLIDOS</th>
+                            <th>MOTIVO</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="solicitud" items="${solicitudes}">
+                        <tr>
+                            <td>${solicitud.docente.nombres}</td>
+                            <td>${solicitud.docente.apellidos}</td>
+                            <td>${solicitud.motivo}</td>
+                            <td>
+                                <input type="submit" class="btn btn-primary button-rounded-short"  name="atender" value="Atender">
+                                <input type="hidden" name="solicitudAtendida" value="${solicitud.idSolicitud}">
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </form>
+        </div>
     </div>
+    <div style="height: 50px;">
+
+        </div>
     <script type="text/javascript">
         <c:if test="${message != null}">
             alert('${message}');

@@ -14,88 +14,135 @@
     
 </head>
 <body>
-    <div align="center">
-        <div>
-            <h2>Docente: <c:out value="${docente.nombres}"/> <c:out value="${docente.apellidos}"/></h2>
-            <h2>Tipo Docente: T. <c:out value="${docente.categoria.tipo}"/></h2>
+    <div>
+        <div align="center">
+            <div class="div-contenedor">
+                <label>NOMBRES: </label><input class="text-rounded" type="text" value="${docente.nombres} ${docente.apellidos}" disabled="true"/>
+                <label>TIPO:    </label><input class="text-rounded" type="text" value="T. ${docente.categoria.tipo}" disabled="true"/>
+            </div>
         </div>
-        <form action="./seleccionarhorario" align="center" method="post">
-            <table id="interactable_table">
-                <thead>
-                    <tr class="table100-head">
-                        <th>HORAS</th>
-                        <th class="column2">Lunes</th>
-                        <th class="column2">Martes</th>
-                        <th class="column2">Miércoles</th>
-                        <th class="column2">Jueves</th>
-                        <th class="column2">Viernes</th>
-                        <th class="column2">Sábado</th>
-                    </tr>
-                </thead>
-                <c:forEach var="r" items="${horario}">
-                    <tr>
-                        <td id="hora"><label><c:out value="${r.hora}"/></label></td>
-                        <td><input type="checkbox" value="${r.hora}" name="lunes" style="opacity:0; position:absolute; left:9999px;"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="martes" style="opacity:0; position:absolute; left:9999px;"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="miercoles" style="opacity:0; position:absolute; left:9999px;"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="jueves" style="opacity:0; position:absolute; left:9999px;"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="viernes" style="opacity:0; position:absolute; left:9999px;"/></td>
-                        <td><input type="checkbox" value="${r.hora}" name="sabado" style="opacity:0; position:absolute; left:9999px;"/></td>
-                    </tr>
-                </c:forEach>
-            </table>
-            
-            <input type="submit" class="button-next  btn btn-primary" value="Seleccionar cursos a dictar"/>
-            
-            <script type="text/javascript">
-                <c:if test="${errorMessage != null}">
-                    alert('${errorMessage}');
-                </c:if>
-            </script>
-            <script>
-            
-            $(function () {
-            var isMouseDown = false,
-                isHighlighted;
-            $("#interactable_table td")
-                .mousedown(function () {
+        <div align="center">
+            <form action="./seleccionarhorario" method="post">
+                <table id="interactable_table">
+                    <thead>
+                        <tr class="table100-head">
+                            <th width="10%">HORAS</th>
+                            <th width="15%" class="column2">Lunes</th>
+                            <th width="15%" class="column2">Martes</th>
+                            <th width="15%" class="column2">Mi&eacute;rcoles</th>
+                            <th width="15%" class="column2">Jueves</th>
+                            <th width="15%" class="column2">Viernes</th>
+                            <th width="15%" class="column2">S&aacute;bado</th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="r" items="${horario}">
+                        <tr>
+                            <td id="hora"><label><c:out value="${r.hora}"/></label></td>
+                            <td><input type="checkbox" value="${r.hora}" name="lunes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                            <td><input type="checkbox" value="${r.hora}" name="martes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                            <td><input type="checkbox" value="${r.hora}" name="miercoles" style="opacity:0; position:absolute; left:9999px;"/></td>
+                            <td><input type="checkbox" value="${r.hora}" name="jueves" style="opacity:0; position:absolute; left:9999px;"/></td>
+                            <td><input type="checkbox" value="${r.hora}" name="viernes" style="opacity:0; position:absolute; left:9999px;"/></td>
+                            <td><input type="checkbox" value="${r.hora}" name="sabado" style="opacity:0; position:absolute; left:9999px;"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <br>
+                <div align="left" >
+                    <div class="div-contenedor-horas">
+                        <label>Cantidad de horas: </label><input id="contador" class="text-rounded-short" value="0"/>
+                    </div>
 
-                var isHour = $(this).attr("id");
-                if(isHour != "hora"){
-                    isMouseDown = true;
-                    $(this).toggleClass("selected");
-                    isHighlighted = $(this).hasClass("selected");
-                    if(isHighlighted)
-                        ($(this).children()).attr("checked","checked");
-                    else
-                        ($(this).children()).removeAttr("checked");
+                </div>
+                <div align="right" style="margin-right: 15%;">
+                    <input type="submit" class="btn btn-primary button-rounded" value="Seleccionar cursos a dictar"/>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="height: 50px;">
+
+    </div>
+</body>
+<footer>
+    <script type="text/javascript">
+        <c:if test="${errorMessage != null}">
+            alert('${errorMessage}');
+        </c:if>
+    </script>
+    <script>
+    
+    $(function () {
+    var isMouseDown = false,
+        isHighlighted;
+    $("#interactable_table td")
+        .mousedown(function () {
+        var isHour = $(this).attr("id");
+        if(isHour != "hora"){
+            isMouseDown = true;
+            $(this).toggleClass("selected");
+            isHighlighted = $(this).hasClass("selected");
+            if(isHighlighted){
+                var isChecked = ($(this).children()).attr("checked");
+                if (typeof isChecked == typeof undefined || isChecked == false) {
+                    ($(this).children()).attr("checked","checked");
+                    //Contador
+                    var c = parseInt($("#contador").val());
+                    c = c + 1;
+                    $("#contador").val(c);
                 }
-                
-                return false; // prevent text selection
-                })
-                .mouseover(function () {
-                if (isMouseDown) {
-                    var isHour = $(this).attr("id");
-                    if(isHour != "hora"){
-                        $(this).toggleClass("selected", isHighlighted);
-                        if(isHighlighted)
-                            ($(this).children()).attr("checked","checked");
-                        else
-                            ($(this).children()).removeAttr("checked");
+            }
+            else{
+                var isChecked = ($(this).children()).attr("checked");
+                if (typeof isChecked !== typeof undefined && isChecked !== false) {  
+                    ($(this).children()).removeAttr("checked");
+                    //Contador
+                    var c = parseInt($("#contador").val());
+                    c = c - 1;
+                    $("#contador").val(c);
+                }
+            }
+        }
+        
+        return false; // prevent text selection
+        })
+        .mouseover(function () {
+        if (isMouseDown) {
+            var isHour = $(this).attr("id");
+            if(isHour != "hora"){
+                $(this).toggleClass("selected", isHighlighted);
+                if(isHighlighted){
+                    var isChecked = ($(this).children()).attr("checked");
+                    if (typeof isChecked == typeof undefined || isChecked == false) {
+                        ($(this).children()).attr("checked","checked");
+                        //Contador
+                        var c = parseInt($("#contador").val());
+                        c = c + 1;
+                        $("#contador").val(c);
                     }
                 }
-                })
-                .bind("selectstart", function () {
-                return false;
-                })
+                else{
+                    var isChecked = ($(this).children()).attr("checked");
+                    if (typeof isChecked !== typeof undefined && isChecked !== false) {  
+                        ($(this).children()).removeAttr("checked");
+                        //Contador
+                        var c = parseInt($("#contador").val());
+                        c = c - 1;
+                        $("#contador").val(c);
+                    }
+                }
+            }
+        }
+        })
+        .bind("selectstart", function () {
+        return false;
+        })
 
-            $(document)
-                .mouseup(function () {
-                isMouseDown = false;
-                });
-            });
-            </script>
-        </form>
-    </div>	
-</body>
+    $(document)
+        .mouseup(function () {
+        isMouseDown = false;
+        });
+    });
+    </script>
+</footer>
 </html>

@@ -7,47 +7,60 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Sistema Disponibilidad Docente</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="js/jquery-3.4.1.js"></script>
-
 </head>
 <body>
-    <div align="center">
-        <div>
-            <h2>Docente: <c:out value="${docente.nombres}"/> <c:out value="${docente.apellidos}"/></h2>
-            <h2>Tipo Docente: T. <c:out value="${docente.categoria.tipo}"/></h2>
+    <div>
+        <div align="center">
+            <div class="div-contenedor">
+                <label>NOMBRES: </label><input class="text-rounded" type="text" value="${docente.nombres} ${docente.apellidos}" disabled="true"/>
+                <label>TIPO:    </label><input class="text-rounded" type="text" value="T. ${docente.categoria.tipo}" disabled="true"/>
+            </div>
         </div>
-        <form action="./seleccionarcursos" align="center" method="post">
-            <table>
-                <c:forEach var = "i" begin = "1" end = "${docente.categoria.cursosCan}">
-                    <tr>
-                        <td>
-                            Seleccione escuela:
-                        </td>
-                        <td>
-                            <select name="escuela${i}" id="escuela${i}">
-                                <c:forEach var="e" items="${cursosporescuela}">
-                                    <option>${e.key}</option>
-                                </c:forEach>
-                            </select>    
-                        </td>
-                        <td>
-                            Seleccione curso:
-                        </td>
-                        <td>
-                            <select name="cursoseleccionado${i}" id="cursoseleccionado${i}">
-                                <c:forEach var="cursoescuela" items="${cursosporescuela[primerescuela]}">
-                                    <option value="${cursoescuela.curso}">
-                                        ${cursoescuela.nombre}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </td>  
-                    </tr>                           
-                </c:forEach>
-            </table>
-            <input type="submit" name="siguiente" value="Siguiente"/>
-        </form>
+        <div align="center">
+            <form action="./seleccionarcursos" align="center" method="post">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">SELECCIONE LAS ESCUELAS</th>
+                            <th colspan="2">SELECCIONE LOS CURSOS</th>
+                        </tr>
+                    </thead>
+                    <c:forEach var = "i" begin = "1" end = "${docente.categoria.cursosCan}">
+                        <tr>
+                            <td>
+                                Seleccione escuela:
+                            </td>
+                            <td>
+                                <select name="escuela${i}" id="escuela${i}">
+                                    <c:forEach var="e" items="${cursosporescuela}">
+                                        <option>${e.key}</option>
+                                    </c:forEach>
+                                </select>    
+                            </td>
+                            <td>
+                                Seleccione curso:
+                            </td>
+                            <td>
+                                <select name="cursoseleccionado${i}" id="cursoseleccionado${i}">
+                                    <c:forEach var="cursoescuela" items="${cursosporescuela[primerescuela]}">
+                                        <option value="${cursoescuela.curso}">
+                                            ${cursoescuela.nombre}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </td>  
+                        </tr>                           
+                    </c:forEach>
+                </table>
+                <div align="right" style="margin-right: 15%;">
+                    <input type="submit" class="btn btn-primary button-rounded" name="siguiente" value="Siguiente"/>
+                </div>
+            </form>
+        </div>
     </div>
         
     <script type="text/javascript">
