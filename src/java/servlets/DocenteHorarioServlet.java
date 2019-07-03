@@ -84,11 +84,13 @@ public class DocenteHorarioServlet extends HttpServlet {
                         //Cantidad de horas inválida
 
                         //Test Message
-                        request.setAttribute("errorMessage", "¡Debe llenar de "+docente.getCategoria().getHorasLleMin()+" a "+docente.getCategoria().getHorasLleMax()+" horas!");
+                        //request.setAttribute("errorMessage", "¡Debe llenar de "+docente.getCategoria().getHorasLleMin()+" a "+docente.getCategoria().getHorasLleMax()+" horas!");
+                        request.setAttribute("errorMessage", "¡Debe cumplir todos los requisitos!");
                     }
                 }else{
                     //Debe llenar XX horas como mínimo y XX como máximo
-                    request.setAttribute("errorMessage", "¡Debe llenar de "+docente.getCategoria().getHorasLleMin()+" a "+docente.getCategoria().getHorasLleMax()+" horas!");
+                    //request.setAttribute("errorMessage", "¡Debe llenar de "+docente.getCategoria().getHorasLleMin()+" a "+docente.getCategoria().getHorasLleMax()+" horas!");
+                    request.setAttribute("errorMessage", "¡Debe cumplir todos los requisitos!");
                 }
             }else{
                 primera = false;

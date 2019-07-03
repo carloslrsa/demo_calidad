@@ -19,6 +19,10 @@
             <div class="div-contenedor">
                 <label>NOMBRES: </label><input class="text-rounded" type="text" value="${docente.nombres} ${docente.apellidos}" disabled="true"/>
                 <label>TIPO:    </label><input class="text-rounded" type="text" value="T. ${docente.categoria.tipo}" disabled="true"/>
+                <hr>
+                <label>*RECUERDE QUE DEBE LLENAR DE ${docente.categoria.horasLleMin} A ${docente.categoria.horasLleMax} HORAS</label>
+                <br>
+                <label>*RECUERDE QUE NO DEBE DEJAR HORAS SOLAS (SELECCIONAR AL MENOS DOS HORAS CONTIGUAS)</label>
             </div>
         </div>
         <div align="center">
