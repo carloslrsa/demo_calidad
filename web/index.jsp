@@ -14,7 +14,7 @@
 <body>
     <div class="wrapper">
         <form class="form-signin" action=".\iniciosesion" method="post">
-            <img src="FISI_LOGO.png" class="center" width="150" height="150" />
+            <img alt="Logo" src="FISI_LOGO.png" class="center" width="150" height="150" />
             <h2 class="form-signin-heading" align="center">DISPONIBILIDAD DOCENTE</h2>
             <input type="text" class="form-control" name="dni" placeholder="DNI"/>
             <input type="password" class="form-control" name="pass" placeholder="Password" required=""/>
